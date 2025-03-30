@@ -14,7 +14,7 @@
     }
   ],
   "scripts": [
-	"classes.js",
+	"DynamicTable.js",
   ],
 
   "download": "https://github.com/spydyrsbyte/foundry-csb-tools/archive/refs/heads/main.zip",
