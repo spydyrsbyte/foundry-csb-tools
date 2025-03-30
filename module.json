@@ -1,0 +1,22 @@
+{
+  "id": "csb_tools",
+  "title": "CSB Tools",
+  "description"	: "A set of tools that I need.",
+  "version": "0.0.1",
+  "compatibility": {
+    "minimum": "11",
+    "verified": "12"
+  },
+  "authors": [
+    {
+      "name": "Spydyrs.byte",
+      "email": "spydyrs.byte@gmail.com"
+    }
+  ],
+  "scripts": [
+	"classes.js",
+  ],
+
+  "download": "https://github.com/spydyrsbyte/foundry-spydyr-tools/archive/refs/heads/main.zip",
+  "manifest":"https://raw.githubusercontent.com/spydyrsbyte/foundry-spydyr-tools/refs/heads/main/module.json"	
+}
