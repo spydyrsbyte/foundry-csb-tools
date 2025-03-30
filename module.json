@@ -17,6 +17,6 @@
 	"classes.js",
   ],
 
-  "download": "https://github.com/spydyrsbyte/foundry-spydyr-tools/archive/refs/heads/main.zip",
+  "download": "https://github.com/spydyrsbyte/foundry-csb-tools/archive/refs/heads/main.zip",
   "manifest":"https://raw.githubusercontent.com/spydyrsbyte/foundry-csb-tools/refs/heads/main/module.json"	
 }
