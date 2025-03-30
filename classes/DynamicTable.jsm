@@ -1,4 +1,4 @@
-class DynamicTable {
+export class DynamicTable {
   constructor(dynamicTable = {}) {
     this._table = dynamicTable;
 
