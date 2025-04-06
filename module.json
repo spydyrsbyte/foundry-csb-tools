@@ -13,8 +13,9 @@
       "email": "spydyrs.byte@gmail.com"
     }
   ],
+  "esmodules": ["classes/Lookups.js"],
   "scripts": [
-	"Lookups.js",
+	"main.js",
   ],
 
   "download": "https://github.com/spydyrsbyte/foundry-csb-tools/archive/refs/heads/main.zip",
