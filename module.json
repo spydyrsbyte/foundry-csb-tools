@@ -14,7 +14,7 @@
     }
   ],
   "scripts": [
-	"DynamicTable.js",
+	"Lookups.js",
   ],
 
   "download": "https://github.com/spydyrsbyte/foundry-csb-tools/archive/refs/heads/main.zip",
