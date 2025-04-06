@@ -15,7 +15,7 @@
   ],
   "esmodules": ["classes/Lookups.js"],
   "scripts": [
-	"main.js",
+	"main.js"
   ],
 
   "download": "https://github.com/spydyrsbyte/foundry-csb-tools/archive/refs/heads/main.zip",
