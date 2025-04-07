@@ -13,7 +13,10 @@
       "email": "spydyrs.byte@gmail.com"
     }
   ],
-  "esmodules": ["./classes/Lookups.jsm"],
+  "esmodules": [
+	  "./classes/Lookups.js",
+	  "./classes/Character.js"
+  ],
   "scripts": [
 	"./main.js"
   ],
