@@ -14,8 +14,7 @@
     }
   ],
   "esmodules": [
-	  "./classes/Lookups.js",
-	  "./classes/Character.js"
+	  "./classes/Application.js"
   ],
   "scripts": [
 	"./main.js"
