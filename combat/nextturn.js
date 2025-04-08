@@ -98,3 +98,12 @@ Hooks.on("renderChatMessage", (message, html, data) => {
     await message.delete();
   });
 });
+Hooks.on("createCombatant", async (combatant, options, userId) => {
+  const token = canvas.tokens.get(combatant.tokenId);
+  if (!token) return;
+
+  const actor = token.actor;
+  if (!actor) return;
+
+  await actor.update({ "system.props.bap.cap": 0 });
+});
