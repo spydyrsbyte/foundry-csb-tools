@@ -1,26 +1,28 @@
 async function drawAPBubble(token) {
   if (!token?.document?.actor) return;
 
-  // Remove any existing bubble
-  if (token.apBubble) {
-    token.apBubble.destroy();
-    token.apBubble = null;
+  // Remove old bubble UI
+  if (token.apBubbleContainer) {
+    token.apBubbleContainer.destroy({ children: true });
+    token.apBubbleContainer = null;
   }
 
   const current = token.document.getFlag("ap-tracker", "currentAP") ?? null;
   const spent = token.document.getFlag("ap-tracker", "spentAP") ?? null;
 
-  if (current === null) return; // Don't display if AP isn't set
+  if (current === null) return;
 
   const remaining = spent !== null ? current - spent : current;
+  let fillColor = "#ffd700";
+  if (remaining <= current * 0.25) fillColor = "#ff5555";
 
-  // Optional color shift based on AP remaining
-  let fillColor = "#ffd700"; // gold
-  if (remaining <= current * 0.25) fillColor = "#ff5555"; // red if low
+  // Main container for all elements
+  const container = new PIXI.Container();
+  token.apBubbleContainer = container;
+  token.addChild(container);
 
-  const text = `⚡ ${remaining}/${current}`;
-
-  const style = new PIXI.TextStyle({
+  // ⚡ AP text
+  const apText = new PIXI.Text(`⚡ ${remaining}/${current}`, new PIXI.TextStyle({
     fontFamily: "Arial Black",
     fontSize: 16,
     fontWeight: "bold",
@@ -31,14 +33,59 @@ async function drawAPBubble(token) {
     dropShadowColor: "#000000",
     dropShadowBlur: 4,
     dropShadowDistance: 1
+  }));
+  apText.anchor.set(1, 0.5);
+  apText.position.set(token.w, token.h / 2);
+  container.addChild(apText);
+
+  // ➕ / ➖ buttons
+  const style = new PIXI.TextStyle({
+    fontFamily: "Arial Black",
+    fontSize: 14,
+    fill: "#ffffff",
+    stroke: "#000000",
+    strokeThickness: 3
   });
 
-  const bubble = new PIXI.Text(text, style);
-  bubble.anchor.set(1, 0.5); // right center
-  bubble.position.set(token.w, token.h / 2); // right side
+  const plus = new PIXI.Text("+", style);
+  plus.interactive = true;
+  plus.buttonMode = true;
+  plus.anchor.set(1, 0);
+  plus.position.set(token.w, (token.h / 2) + 12);
 
-  token.apBubble = bubble;
-  token.addChild(bubble);
+  const minus = new PIXI.Text("−", style);
+  minus.interactive = true;
+  minus.buttonMode = true;
+  minus.anchor.set(1, 0);
+  minus.position.set(token.w, (token.h / 2) + 30);
+
+  container.addChild(plus);
+  container.addChild(minus);
+
+  // Click handlers
+  plus.on("pointerdown", async () => {
+    if (!token.owner) return;
+    const curr = token.document.getFlag("ap-tracker", "currentAP") ?? 0;
+    const newAP = curr + 1;
+    await token.document.setFlag("ap-tracker", "currentAP", newAP);
+    drawAPBubble(token);
+    ChatMessage.create({
+      content: `Manual AP Adjustment. Total AP is now: ${newAP}`,
+      whisper: [game.user.id]
+    });
+  });
+
+  minus.on("pointerdown", async () => {
+    if (!token.owner) return;
+    const curr = token.document.getFlag("ap-tracker", "currentAP") ?? 0;
+    const newAP = Math.max(curr - 1, 0);
+    await token.document.setFlag("ap-tracker", "currentAP", newAP);
+    drawAPBubble(token);
+    ChatMessage.create({
+      content: `Manual AP Adjustment. Total AP is now: ${newAP}`,
+      whisper: [game.user.id]
+    });
+  });
 }
 
 Hooks.on("canvasReady", () => {
